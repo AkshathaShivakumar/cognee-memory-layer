@@ -1,4 +1,3 @@
-
 # Memory Layer for LLM Chats (Cognee Hackathon Project)
 
 > Built for the **Hangover Part AI** hackathon by WeMakeDevs — theme: AI memory using [Cognee](https://www.cognee.ai/).
@@ -52,9 +51,9 @@ state at any time, so the effect is demonstrable, not just claimed.
 This project is being built incrementally over 5 days. Checklist below is
 updated as steps are completed.
 
-- [ ] Environment setup (Python, Gemini API key, Cognee account)
-- [ ] Cognee configured + basic remember/recall round-trip verified
-- [ ] Core memory loop in terminal (recall → inject → LLM call → remember)
+- [x] Environment setup (Python, Gemini API key, Cognee account)
+- [x] Cognee configured + basic remember/recall round-trip verified
+- [~] Core memory loop in terminal (recall → inject → LLM call → remember) — built, currently debugging a live end-to-end test
 - [ ] Manual memory commands (`/remember`, `/forget`)
 - [ ] Memory consolidation via `improve()`
 - [ ] Chat UI (Streamlit/Gradio or React)
@@ -72,7 +71,23 @@ updated as steps are completed.
 
 ## Setup
 
-_Instructions will be added once environment setup (Step 1) is complete._
+1. Clone this repo and create a virtual environment:
+   ```bash
+   python -m venv venv
+   .\venv\Scripts\Activate   # Windows
+   ```
+2. Install dependencies:
+   ```bash
+   pip install cognee "cognee[neo4j]" python-dotenv google-generativeai
+   ```
+3. Copy `.env.example` to `.env` and fill in your real values:
+   - A free Gemini API key from [Google AI Studio](https://aistudio.google.com)
+   - A local Neo4j database (via [Neo4j Desktop](https://neo4j.com/download)) with the APOC plugin installed, running on the default `bolt://localhost:7687`
+4. Make sure your Neo4j database instance is **started** in Neo4j Desktop before running any script.
+5. Run the core chat loop:
+   ```bash
+   python chat_loop.py
+   ```
 
 ## Why Cognee for chat-shaped memory?
 
@@ -91,4 +106,6 @@ _To be defined in Step 8 — a fictional user with a recurring project and a
 few stable preferences, used to show a believable "before" (no memory) vs
 "after" (memory-aware) conversation._
 
+## License
 
+TBD
