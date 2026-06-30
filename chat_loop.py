@@ -67,6 +67,11 @@ async def main():
             await cognee.forget(dataset="main_dataset")
             print("\nAll memory has been cleared.\n")
             continue
+        if user_message.strip().lower() == "/improve":
+            print("[consolidating and improving memory...]")
+            await cognee.improve()
+            print("\nMemory has been reviewed and improved.\n")
+            continue
 
         reply = await chat_turn(user_message)
         print(f"\nAssistant: {reply}\n")
