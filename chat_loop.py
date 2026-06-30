@@ -8,7 +8,7 @@ import cognee
 import google.generativeai as genai
 
 # Configure Gemini for our OWN chat calls (separate from Cognee's internal use of Gemini)
-genai.configure(api_key=os.getenv("LLM_API_KEY"))
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 
@@ -52,9 +52,24 @@ async def main():
         if user_message.strip().lower() == "exit":
             break
 
+        if user_message.strip().lower().startswith("/remember"):
+            fact = user_message[len("/remember"):].strip()
+            if fact:
+                print("[manually storing this fact...]")
+                await cognee.remember(fact)
+                print(f"\nRemembered: {fact}\n")
+            else:
+                print("\nUsage: /remember <something to store>\n")
+            continue
+
+        if user_message.strip().lower() == "/forget":
+            print("[wiping all memory...]")
+            await cognee.forget(dataset="main_dataset")
+            print("\nAll memory has been cleared.\n")
+            continue
+
         reply = await chat_turn(user_message)
         print(f"\nAssistant: {reply}\n")
-
 
 if __name__ == "__main__":
     asyncio.run(main())
